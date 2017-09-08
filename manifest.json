@@ -1,0 +1,60 @@
+{
+  "applications": {
+    "gecko": {
+      "strict_min_version": "48.0",
+      "id": "{1f5e9eec-8334-4786-b780-eaa03c04f1a4}"
+    }
+  },
+
+  "background": {
+    "scripts": ["index.js"]
+  },
+
+
+  "commands": {
+    "roll-left": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Left",
+        "linux": "Ctrl+Shift+Left"
+        // "mac": "MacCtrl+Shift+Left"
+      },
+      "description": "Roll left"
+    },
+    "roll-right": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Right",
+        "linux": "Ctrl+Shift+Right"
+        // "mac": "MacCtrl+Shift+Right"
+      },
+      "description": "Roll right"
+    },
+    "clear-stacks": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "linux": "Ctrl+Shift+X"
+        // "mac": "MacCtrl+Shift+X"
+      },
+      "description": "Clear tabs order history"
+    }
+  },
+
+  "browser_action": {
+    "default_icon": {
+      "48": "icon-48.png"
+    }
+  },
+
+  "icons": {
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+
+  "manifest_version": 2,
+
+  "name": "Tab Click Order",
+  "author": "German Ilin",
+  "description": "Switch between tabs in tab click/activation order",
+  "version": "1.0",
+
+  "permissions": []
+}
