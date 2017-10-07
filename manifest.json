@@ -14,17 +14,15 @@
   "commands": {
     "roll-left": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Left",
-        "linux": "Ctrl+Shift+Left"
-        // "mac": "MacCtrl+Shift+Left"
+        "default": "Ctrl+Shift+K",
+        "linux": "Ctrl+Shift+K"
       },
       "description": "Roll left"
     },
     "roll-right": {
       "suggested_key": {
-        "default": "Ctrl+Shift+Right",
-        "linux": "Ctrl+Shift+Right"
-        // "mac": "MacCtrl+Shift+Right"
+        "default": "Ctrl+Shift+L",
+        "linux": "Ctrl+Shift+L"
       },
       "description": "Roll right"
     },
@@ -32,7 +30,6 @@
       "suggested_key": {
         "default": "Ctrl+Shift+X",
         "linux": "Ctrl+Shift+X"
-        // "mac": "MacCtrl+Shift+X"
       },
       "description": "Clear tabs order history"
     }

@@ -10,50 +10,56 @@ let stackMap = new Map();
 let isRolling = false;
 const debugging = false;
 const ROLLING_TIMEOUT = 2000;
-
+const MAX_STACK_LENGTH = 20;
 
 function debug_log(...rest) {
   if (debugging)
     console.log.apply(console, rest);
 }
 
+const getStacks = (windowId) => (stackMap.get(windowId) || [[], []]);
+const saveStacks = (windowId, leftStack, rightStack) => {
+  leftStack.splice(0, Math.max(0, leftStack.length - MAX_STACK_LENGTH));
+  rightStack.splice(0, Math.max(0, leftStack.length - MAX_STACK_LENGTH));
+  stackMap.set(windowId, [leftStack, rightStack]);
+};
 
 const pushBack = (windowId, tabId) => {
   debug_log(`pushBack(${tabId}) begin`);
-  let [leftStack, rightStack] = stackMap.get(windowId) || [[], []];
+  let [leftStack, rightStack] = getStacks(windowId);
   debug_log(leftStack, rightStack);
   leftStack.push(tabId);
-  stackMap.set(windowId, [leftStack, []]);
+  saveStacks(windowId, leftStack, []);
   return leftStack.length ? leftStack[leftStack.length - 1] : null;
   debug_log(`pushBack() end`);
 };
 
 const rollLeft = (windowId) => {
-  let [leftStack, rightStack] = stackMap.get(windowId) || [[], []];
+  let [leftStack, rightStack] = getStacks(windowId);
   debug_log(leftStack, rightStack);
   if (leftStack.length > 1) {
     rightStack.push(leftStack.pop());
   }
-  stackMap.set(windowId, [leftStack, rightStack]);
+  saveStacks(windowId, leftStack, rightStack);
   return leftStack.length ? leftStack[leftStack.length - 1] : null;
 };
 
 const rollRight = (windowId) => {
-  let [leftStack, rightStack] = stackMap.get(windowId) || [[], []];
+  let [leftStack, rightStack] = getStacks(windowId);
   debug_log(leftStack, rightStack);
   if (rightStack.length > 0) {
     leftStack.push(rightStack.pop());
   }
-  stackMap.set(windowId, [leftStack, rightStack]);
+  saveStacks(windowId, leftStack, rightStack);
   return leftStack.length ? leftStack[leftStack.length - 1] : null;
 };
 
 const cleanUp = (windowId, aliveTabIds) => {
-  let [leftStack, rightStack] = stackMap.get(windowId) || [[], []];
+  let [leftStack, rightStack] = getStacks(windowId);
   debug_log(leftStack, rightStack);
   leftStack = leftStack.filter(t => aliveTabIds.indexOf(t) != -1);
   rightStack = rightStack.filter(t => aliveTabIds.indexOf(t) != -1);
-  stackMap.set(windowId, [leftStack, rightStack]);
+  saveStacks(windowId, leftStack, rightStack);
   return leftStack.length ? leftStack[leftStack.length - 1] : null;
 };
 const scheduleUnroll = () => setTimeout(() => {
